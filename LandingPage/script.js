@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hour = now.getHours();
     const greetingText =
       hour >= 5 && hour < 12
-        ? "Buenos días temprano"
+        ? "Buenos días"
         : hour >= 12 && hour < 19
         ? "Buenas tardes"
         : "Buenas noches";

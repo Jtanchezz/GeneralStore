@@ -1,0 +1,234 @@
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --accent: #0ea5e9;
+  --text: #1f2937;
+  --muted: #6b7280;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  scroll-behavior: smooth;
+}
+
+.category-nav .nav-link {
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.category-nav .nav-link.active {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary-dark), var(--accent));
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  background: rgba(14, 165, 233, 0.45);
+  filter: blur(120px);
+  bottom: -120px;
+  right: 15%;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: rgba(59, 130, 246, 0.35);
+  filter: blur(110px);
+  top: -140px;
+  left: 10%;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.greeting-badge {
+  letter-spacing: 0.08em;
+}
+
+.hero-metrics .metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.75rem 0;
+}
+
+.metric__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.metric__label {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-card {
+  border-radius: 1.5rem;
+}
+
+.mini-card {
+  background-color: #f8fafc;
+  border-radius: 1rem;
+  padding: 1rem;
+  height: 100%;
+  border: 1px solid rgba(37, 99, 235, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mini-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.15);
+}
+
+.mini-card__title {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.mini-card__text {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-weight: 700;
+}
+
+.section-title::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 4px;
+  margin-top: 0.75rem;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 999px;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  max-width: 520px;
+}
+
+.filter-btn {
+  border-radius: 999px;
+  font-weight: 600;
+  border-color: rgba(37, 99, 235, 0.3);
+  color: var(--muted);
+}
+
+.filter-btn.active {
+  background-color: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.tech-card {
+  border: none;
+  border-left: 4px solid var(--primary);
+}
+
+.cta-card {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border-radius: 2rem;
+  padding: 3rem 2rem;
+}
+
+.cta-card .btn {
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode */
+body.dark-mode {
+  background-color: #050b19;
+  color: #e2e8f0;
+}
+
+body.dark-mode .navbar {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+}
+
+body.dark-mode .nav-link {
+  color: rgba(226, 232, 240, 0.7);
+}
+
+body.dark-mode .nav-link.active {
+  color: #fff;
+}
+
+body.dark-mode .category-nav {
+  background-color: rgba(15, 23, 42, 0.4);
+}
+
+body.dark-mode .category-nav .nav-link {
+  color: rgba(226, 232, 240, 0.7);
+}
+
+body.dark-mode .category-nav .nav-link.active {
+  background-color: #3b82f6;
+}
+
+body.dark-mode .mini-card {
+  background-color: rgba(15, 23, 42, 0.85);
+  color: #e2e8f0;
+}
+
+body.dark-mode .mini-card__text {
+  color: #cbd5f5;
+}
+
+body.dark-mode .card,
+body.dark-mode .accordion-item,
+body.dark-mode .modal-content {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+body.dark-mode .section-subtitle,
+body.dark-mode .metric__label {
+  color: rgba(226, 232, 240, 0.75);
+}
+
+body.dark-mode .filter-btn {
+  color: #e2e8f0;
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+body.dark-mode .filter-btn.active {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+body.dark-mode .list-group-item {
+  background-color: transparent;
+  color: #e2e8f0;
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+body.dark-mode footer {
+  background-color: #020617 !important;
+}

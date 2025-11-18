@@ -1,0 +1,26 @@
+:root {
+  font-family: 'Space Grotesk', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #2f2410;
+  background-color: #fff9e8;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff9e8;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}

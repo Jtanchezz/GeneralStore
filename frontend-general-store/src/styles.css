@@ -1,0 +1,20 @@
+:root {
+  --color-primary: #ffeb9a;
+  --color-secondary: #ff9d1e;
+  --color-dark: #1f1300;
+  --color-muted: #69593b;
+}
+
+body {
+  scroll-behavior: smooth;
+}
+
+code {
+  background: rgba(255, 157, 30, 0.15);
+  padding: 0.2rem 0.4rem;
+  border-radius: 6px;
+}
+
+.card h3 {
+  margin-top: 0;
+}

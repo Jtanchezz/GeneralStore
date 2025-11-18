@@ -1,1 +1,11 @@
 .DS_Store
+node_modules
+dist
+*.log
+.env
+*.pyc
+__pycache__/
+.venv/
+frontend-general-store/.vite/
+frontend-general-store/dist/
+backend/.env

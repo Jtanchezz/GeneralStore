@@ -10,7 +10,7 @@ from sqlalchemy.orm import selectinload
 from ..database import get_session
 from ..deps import get_current_user
 from ..models import Camera, CameraStatus, CartItem
-from ..schemas import AddToCartRequest, CartItemBase
+from ..schemas import AddToCartRequest, CartItemBase, CameraBase
 
 router = APIRouter(prefix='/cart', tags=['carrito'])
 
@@ -40,22 +40,28 @@ async def add_to_cart(
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='La cámara ya fue vendida')
 
     existing = await session.execute(
-        select(CartItem).options(selectinload(CartItem.camera)).where(CartItem.camera_id == payload.camera_id)
+        select(CartItem.id).where(CartItem.camera_id == payload.camera_id, CartItem.user_id == user.id)
     )
-    cart_item = existing.scalar_one_or_none()
-    if cart_item and cart_item.user_id != user.id:
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='La cámara pertenece a otro carrito')
-    if cart_item and cart_item.user_id == user.id:
-        return cart_item
+    existing_id = existing.scalar_one_or_none()
+    if existing_id:
+        loaded = await session.get(CartItem, existing_id, options=[selectinload(CartItem.camera)])
+        if loaded:
+            return CartItemBase(
+                id=loaded.id,
+                camera=CameraBase.model_validate(loaded.camera),
+                created_at=loaded.created_at,
+            )
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail='No se pudo cargar el carrito')
 
     new_item = CartItem(user_id=user.id, camera_id=camera.id)
     session.add(new_item)
     await session.commit()
     await session.refresh(new_item)
-    reloaded = await session.get(
-        CartItem, new_item.id, options=[selectinload(CartItem.camera)]
+    return CartItemBase(
+        id=new_item.id,
+        camera=CameraBase.model_validate(camera),
+        created_at=new_item.created_at,
     )
-    return reloaded or new_item
 
 
 @router.post('/checkout')

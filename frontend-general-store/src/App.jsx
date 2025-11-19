@@ -292,7 +292,7 @@ function App() {
       setActiveCurrency(user.preferred_currency || guessCurrency())
       await Promise.all([fetchCart(token), fetchMyOffers(token), user.is_admin ? fetchAdminOffers(token) : Promise.resolve([])])
       setActiveView(user.is_admin ? 'admin' : 'home')
-      showStatus('success', `Hola ${user.name}, tu sesión se mantiene por 14 días gracias a Redis.`)
+      showStatus('success', `Hola ${user.name}, tu sesión se mantiene por 14 días.`)
     } catch (error) {
       console.error(error)
       setSessionToken('')
@@ -593,6 +593,20 @@ function App() {
       await apiFetch(`/cart/${cameraId}`, { method: 'DELETE', token: sessionToken })
       fetchCart()
       showStatus('info', 'Cámara eliminada del carrito')
+    } catch (error) {
+      showStatus('error', error.message)
+    }
+  }
+
+  const handleBuyNow = async (cameraId) => {
+    try {
+      if (!currentUser) {
+        showStatus('error', 'Inicia sesión para comprar')
+        return
+      }
+      await apiFetch('/cart', { method: 'POST', body: { camera_id: cameraId }, token: sessionToken })
+      await handleCheckout()
+      setActiveCamera(null)
     } catch (error) {
       showStatus('error', error.message)
     }
@@ -1538,36 +1552,33 @@ function App() {
                   )
                 })()}
               </div>
-              <div className="modal-info">
-                <p className="camera-card__condition">Estado: {activeCamera.condition}</p>
-                <p className="camera-card__description">{activeCamera.description}</p>
-                {renderPrice(activeCamera)}
-                {activeCamera.status === 'sold' ? <small className="badge badge-sold">Vendida</small> : null}
-                <div className="modal-actions">
-                  <button
-                    className="btn secondary"
-                    onClick={() => {
-                      handleAddToCart(activeCamera.id)
-                      setActiveCamera(null)
-                    }}
-                    disabled={activeCamera.status !== 'available'}
-                  >
-                    {activeCamera.status === 'available' ? 'Agregar al carrito' : 'No disponible'}
-                  </button>
-                  <button
-                    className="btn primary"
-                    onClick={() => {
-                      handleCameraStatus(activeCamera.id, { status: 'sold' })
-                      setActiveCamera(null)
-                    }}
-                    disabled={activeCamera.status === 'sold'}
-                  >
-                    Comprar (marcar vendida)
-                  </button>
+                  <div className="modal-info">
+                    <p className="camera-card__condition">Estado: {activeCamera.condition}</p>
+                    <p className="camera-card__description">{activeCamera.description}</p>
+                    {renderPrice(activeCamera)}
+                    {activeCamera.status === 'sold' ? <small className="badge badge-sold">Vendida</small> : null}
+                    <div className="modal-actions">
+                      <button
+                        className="btn secondary"
+                        onClick={() => {
+                          handleAddToCart(activeCamera.id)
+                          setActiveCamera(null)
+                        }}
+                        disabled={activeCamera.status !== 'available'}
+                      >
+                        {activeCamera.status === 'available' ? 'Agregar al carrito' : 'No disponible'}
+                      </button>
+                      <button
+                        className="btn primary"
+                        onClick={() => handleBuyNow(activeCamera.id)}
+                        disabled={activeCamera.status === 'sold'}
+                      >
+                        Comprar
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
         </div>
       ) : null}
 
